@@ -27,6 +27,5 @@ project "TickCounter"
 	
 	files {
 		"TickCounter/*.cpp", "TickCounter/*.h"
-
 	}
 
