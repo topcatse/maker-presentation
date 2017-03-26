@@ -17,9 +17,11 @@ solution "TickCounterSolution"
 configuration "Debug"
 	flags       { "Symbols" }
 	defines     { "DEBUG=1" }
+    buildoptions {"-std=c++11"}
 	
 configuration "Release"
 	flags       { "OptimizeSize" }
+    buildoptions {"-std=c++11"}
 
 project "TickCounter"
 	language "C++"
