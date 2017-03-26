@@ -1,0 +1,36 @@
+sudo: false
+
+branches:
+  only:
+  - master
+
+os:
+    #  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
+language:
+  - cpp
+
+matrix:
+  exclude:
+  # On OS X gcc is just a wrapper around clang, so don't waste time testing that
+  - os: osx
+    compiler: gcc
+
+install:
+  - brew install ninja
+  - brew install meson
+    #- mkdir .tmp
+    #- curl -L https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip -o .tmp/ninja-linux.zip
+    #- unzip .tmp/ninja-linux.zip -d .tmp
+
+before_script:
+    #- export PATH=$PATH:$PWD/.tmp
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then meson TickCounter build && cd build && ninja fi
+
