@@ -1,16 +1,16 @@
-sudo: false
+sudo: required
 
 branches:
   only:
       #- master
 
 os:
-    #  - linux
-  - osx
+  - linux
+    #- osx
 
 compiler:
   - gcc
-  - clang
+    #- clang
 
 language:
   - cpp
@@ -22,15 +22,17 @@ matrix:
     compiler: gcc
 
 install:
-  - brew install ninja
-  - brew install meson
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ninja; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo pip3 install meson; fi
     #- mkdir .tmp
     #- curl -L https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip -o .tmp/ninja-linux.zip
     #- unzip .tmp/ninja-linux.zip -d .tmp
 
-before_script:
+    #before_script:
     #- export PATH=$PATH:$PWD/.tmp
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then meson TickCounter build && cd build && ninja; fi
+  - meson TickCounter build && cd build && ninja
 
