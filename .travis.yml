@@ -1,20 +1,17 @@
 dist: trusty
 sudo: required
 
-#python:
-#  - "3.6"
-
 branches:
   only:
       #- master
 
 os:
   - linux
-    #- osx
+    - osx
 
 compiler:
   - gcc
-    #- clang
+    - clang
 
 language:
   - cpp
@@ -28,20 +25,20 @@ matrix:
 install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ninja; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
-    # - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install python3.6 python3.6-dev -y; fi
-    #  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -O https://bootstrap.pypa.io/get-pip.py; fi
-    #  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo python3.6 get-pip.py; fi
-    #  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo mv /usr/bin/python3 /usr/bin/python3-old; fi
-    #  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo ln -s /usr/bin/python3.6 /usr/bin/python3; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install meson; fi
-    #- mkdir .tmp
-    #- curl -L https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip -o .tmp/ninja-linux.zip
-    #- unzip .tmp/ninja-linux.zip -d .tmp
-
-    #before_script:
-    #- export PATH=$PATH:$PWD/.tmp
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then INSTALL=curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ruby -e $INSTALL; fi
+    #- if [ "$TRAVIS_OS_NAME" == "linux" ]; then ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then PATH="$HOME/.linuxbrew/bin:$PATH"; fi
+  - brew install ninja
+  - brew install meson
+    #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ninja; fi
+    #- if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
+    #- if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
+    #- if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install meson; fi
 
 script:
-  - meson TickCounter build && cd build && ninja
+  - cd TickCounter
+  - meson . ../build
+  - cd ../build
+  - ninja
 
