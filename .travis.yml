@@ -22,16 +22,18 @@ matrix:
   - os: osx
     compiler: gcc
 
-before_install:
-    - export PATH=$HOME/.local/bin:$PATH
+install: true
 
-install:
+before_script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ninja; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install meson --user `whoami`; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install --user meson; fi
 
 script:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 -v ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 show ; fi
+  - echo $PATH
   - cd TickCounter
   - meson . ../build
   - cd ../build
