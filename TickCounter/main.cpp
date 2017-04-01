@@ -9,16 +9,17 @@ using namespace std;
 class TickReceiver : public ITickReceiver
 {
 public:
-    TickReceiver() : counter(0) {}
+    TickReceiver() : m_counter(0) {}
     
-    void onTick()
+    void onTick() override
     {
-        ++counter;
-        cout << counter;
+        
+        ++m_counter;
+        cout << m_counter;
     }
 
 private:
-    int counter;
+    int m_counter;
 };
 
 int main(int argc, char* argv[])
