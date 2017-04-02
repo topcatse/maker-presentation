@@ -7,7 +7,7 @@ branches:
 
 os:
   - linux
-  - osx
+    # - osx
 
 compiler:
   - gcc
@@ -30,7 +30,7 @@ install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git clone https://github.com/mesonbuild/meson.git meson_src; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd meson_src && python setup.py install && popd; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd meson_src && python3 setup.py install && popd; fi
 
 script:
   - echo $PATH
