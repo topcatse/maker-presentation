@@ -1,5 +1,5 @@
-dist: trusty
-sudo: false
+#dist: trusty
+sudo: required 
 
 branches:
   only:
@@ -7,17 +7,17 @@ branches:
 
 os:
   - linux
-    - osx
+  - osx
 
 compiler:
   - gcc
     - clang
 
-language:
-  - python
+      #language:
+      #  - python
 
-python:
-  - 3.4
+      #python:
+      #  - 3.6
 
 matrix:
   exclude:
@@ -28,19 +28,15 @@ matrix:
 install:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ninja; fi
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install meson; fi
-    #  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then apt-get install ninja-build; fi
-    #- if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install --upgrade pip setuptools; fi
-    #- if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip3 install .; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip install --user meson; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install ninja-build; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git clone https://github.com/mesonbuild/meson.git meson_src; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd meson_src && python setup.py install && popd; fi
 
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip -v ; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip show ; fi
   - echo $PATH
-  - tree
   - ls -R .
   - cd TickCounter
-  - meson.py . ../build
+  - meson . ../build
   - cd ../build
   - ninja
 
