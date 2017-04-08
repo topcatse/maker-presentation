@@ -9,7 +9,7 @@ language:
   - cpp
     
 python: 
-  - 3.6    
+  - 3.4    
 
 matrix:
   include:
