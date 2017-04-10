@@ -22,7 +22,7 @@ before_install:
         brew install ninja
         brew install meson
     else
-        docker pull jpakkane/mesonci:yakkety
+        docker pull topcatse/mesondocker:latest
     fi
 
 before_script:
@@ -33,12 +33,13 @@ before_script:
        meson TickCounter build
        ninja -C build
     else
-       echo FROM jpakkane/mesonci:yakkety > Dockerfile
-       echo ADD . /root >> Dockerfile
+       echo FROM topcatse/mesondocker:latest > Dockerfile
+       echo ADD . /root/ >> Dockerfile
        docker build -t mydock .
-       docker run mydock /bin/sh -c "cd /root && TRAVIS=true CC=$CC CXX=$CXX meson TickCounter build && ninja -C build"
+       docker run mydock /bin/sh -c "cd /root && meson TickCounter build && ninja -C build"
     fi
 
 script:
   - echo script
+  - ls -R *
 
