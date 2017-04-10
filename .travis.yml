@@ -1,0 +1,45 @@
+branches:
+  only:
+    - master
+
+sudo: false
+
+os:
+  - linux
+  - osx
+
+language:
+  - cpp
+
+services:
+  - docker
+
+before_install:
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
+    then
+        brew update
+        brew install ninja
+        brew install meson
+    else
+        docker pull topcatse/mesondocker:latest
+    fi
+
+before_script:
+  - mkdir build
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
+    then
+       meson TickCounter build
+       ninja -C build
+    else
+       echo FROM topcatse/mesondocker:latest > Dockerfile
+       echo ADD . /root/ >> Dockerfile
+       docker build -t mydock .
+       docker run mydock /bin/sh -c "cd /root && meson TickCounter build && ninja -C build"
+    fi
+
+script:
+  - echo script
+  - ls -R *
+
