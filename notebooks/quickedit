@@ -1,4 +1,4 @@
 #!/bin/bash
 TAG=$1
-cd /tmp/TickCounter
-git archive --format=tar --remote=~/src/maker-presentation $TAG:TickCounter | tar xf -
+cd /tmp/TickProject
+git archive --format=tar --prefix=src/ --remote=~/src/maker-presentation $TAG:TickCounter | tar xf -
