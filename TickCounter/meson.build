@@ -1,20 +1,16 @@
-project('TickCounterProject', 'cpp', default_options: ['std=c++11'])
+project('TickCounterProject', 'cpp')
 
 src = ['TickerInterface.h', 'KeyTicker.h', 'main.cpp']
 
 spdlog_dep = dependency('spdlog', required : true)
-if spdlog_dep.found()
-    message(spdlog_dep.get_pkgconfig_variable('includedir'))
-else
-    error('spdlog not found!')
-endif    
-
+spdlog_inc = include_directories(spdlog_dep.get_pkgconfig_variable('includedir')) 
 
 thread_dep = dependency('threads')
 
 executable('tickcounter',
            sources : src,
-           include_directories : spdlog_dep,
+           cpp_args : '-std=c++11',
+           include_directories : spdlog_inc,
            dependencies : [spdlog_dep, thread_dep])
 
 

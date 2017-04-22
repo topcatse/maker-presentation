@@ -18,7 +18,7 @@ public:
     {
         
         ++m_counter;
-        cout << m_counter;
+        spdlog::get("console")->info("{}", m_counter);
     }
 
 private:
@@ -27,9 +27,9 @@ private:
 
 int main(int argc, char* argv[])
 {
-    auto console = spdlog::stdout_color_mt("console");
+    auto console = spdlog::stdout_logger_st("console");
     
-    console->info("Hello World!");
+    console->warn("Hello World!");
     
     TickReceiver receiver;
 
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
     ticker->stop();
 
-    console->info("Good Bye Cruel World");
+    console->warn("Good Bye Cruel World");
     
     return 0;
 }
