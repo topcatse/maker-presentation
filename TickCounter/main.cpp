@@ -1,6 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <chrono>
+
+#include "spdlog/spdlog.h"
+
 #include "TickerInterface.h"
 #include "KeyTicker.h"
  
@@ -24,19 +27,21 @@ private:
 
 int main(int argc, char* argv[])
 {
-  cout << "Hello World!" << endl;
-  
-  TickReceiver receiver;
+    auto console = spdlog::stdout_color_mt("console");
+    
+    console->info("Hello World!");
+    
+    TickReceiver receiver;
 
-  std::unique_ptr<ITicker> ticker{new KeyTicker(&receiver)};
+    std::unique_ptr<ITicker> ticker{new KeyTicker(&receiver)};
 
-  ticker->start();
+    ticker->start();
 
-  this_thread::sleep_for(chrono::seconds(10));
+    this_thread::sleep_for(chrono::seconds(10));
 
-  ticker->stop();
+    ticker->stop();
 
-  cout << endl << "Good Bye Cruel World" << endl;
-  
-  return 0;
+    console->info("Good Bye Cruel World");
+    
+    return 0;
 }
