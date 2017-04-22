@@ -2,7 +2,7 @@
 #include <memory>
 #include <chrono>
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 
 #include "TickerInterface.h"
 #include "KeyTicker.h"
