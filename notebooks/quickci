@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /tmp/TickProject
+for TAG in "$@"
+do
+  git archive --format=tar --prefix=src/ --remote=~/src/maker-presentation $TAG:TickCounter/ | tar xf -
+  git commit -am "Fixed $TAG"
+done
