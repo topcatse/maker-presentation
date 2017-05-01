@@ -36,7 +36,7 @@ before_script:
     else
        echo FROM topcatse/mesondocker:latest > Dockerfile
        echo ADD . /root/ >> Dockerfile
-       echo RUN apt-get -q install -y spdlog >> Dockerfile 
+       echo RUN apt-get -q install -y libspdlog-dev >> Dockerfile 
        docker build -t mydock .
        docker run mydock /bin/sh -c "cd /root && meson TickCounter build && ninja -C build"
     fi
